@@ -1,9 +1,9 @@
 /**
- * /knowledge/[star]/[topic] �?SEO 落地�? *
- * 14 主星 × 13 topic = 182 个独�?URL
- * 每页含完整的 STAR_DB 4 段论断（一句话定调/核心论断/命盘依据/经典出处�? *
- * SEO 要点�? *  - title 含主关键词（�?紫微入命宫·倪海夏体系详�?�? *  - description �?dingdiao（一句话定调�? *  - JSON-LD Article 结构化数�? *  - 内链：同主星其他 12 �?+ 同宫其他 13 主星
- *  - generateStaticParams 静态生成，零运行时开销
+ * /knowledge/[star]/[topic] 锟?SEO 钀藉湴锟? *
+ * 14 涓绘槦 脳 13 topic = 182 涓嫭锟?URL
+ * 姣忛〉鍚畬鏁寸殑 STAR_DB 4 娈佃鏂紙涓€鍙ヨ瘽瀹氳皟/鏍稿績璁烘柇/鍛界洏渚濇嵁/缁忓吀鍑哄锟? *
+ * SEO 瑕佺偣锟? *  - title 鍚富鍏抽敭璇嶏紙锟?绱井鍏ュ懡瀹峰€捣澶忎綋绯昏锟?锟? *  - description 锟?dingdiao锛堜竴鍙ヨ瘽瀹氳皟锟? *  - JSON-LD Article 缁撴瀯鍖栨暟锟? *  - 鍐呴摼锛氬悓涓绘槦鍏朵粬 12 锟?+ 鍚屽鍏朵粬 13 涓绘槦
+ *  - generateStaticParams 闈欐€佺敓鎴愶紝闆惰繍琛屾椂寮€閿€
  */
 
 import Link from 'next/link';
@@ -19,12 +19,11 @@ import {
   SLUG_TO_STAR,
 } from '@/lib/seo/knowledge';
 
-// 允许动态参数：如果某个 star/topic 组合不在 generateStaticParams 列表�?// 也允许运行时按需渲染，避免中�?URL 编码问题导致 404
-export const dynamicParams = false;
+// 鍏佽鍔ㄦ€佸弬鏁帮細濡傛灉鏌愪釜 star/topic 缁勫悎涓嶅湪 generateStaticParams 鍒楄〃锟?// 涔熷厑璁歌繍琛屾椂鎸夐渶娓叉煋锛岄伩鍏嶄腑锟?URL 缂栫爜闂瀵艰嚧 404
 
 export async function generateStaticParams() {
   const routes = getAllKnowledgeRoutes();
-  // URL 用拼�?slug 替代中文，避开 Vercel/CDN 中文路由边界问题
+  // URL 鐢ㄦ嫾锟?slug 鏇夸唬涓枃锛岄伩寮€ Vercel/CDN 涓枃璺敱杈圭晫闂
   return routes.map(r => ({ star: r.slug, topic: r.topic }));
 }
 
@@ -35,9 +34,9 @@ export async function generateMetadata({ params }: { params: Promise<{ star: str
   const data = getKnowledge(star, topic as TopicKey);
   if (!data.exists) return {};
 
-  const title = `${star}�?{data.palaceName}�?· ${data.topicLabel} · 倪海夏体系详解`;
+  const title = `${star}锟?{data.palaceName}锟?路 ${data.topicLabel} 路 鍊捣澶忎綋绯昏瑙;
   const description = data.parsed.dingdiao
-    || `${star}�?{data.palaceName}宫的紫微斗数解读 �?基于倪海夏《天纪》体系与古籍《紫微斗数全集》《骨髓赋》。`;
+    || `${star}锟?{data.palaceName}瀹殑绱井鏂楁暟瑙ｈ 锟?鍩轰簬鍊捣澶忋€婂ぉ绾€嬩綋绯讳笌鍙ょ睄銆婄传寰枟鏁板叏闆嗐€嬨€婇楂撹祴銆嬨€俙;
 
   return {
     title,
@@ -52,9 +51,9 @@ export async function generateMetadata({ params }: { params: Promise<{ star: str
       canonical: `https://xiaoyuanzhanbu.top/knowledge/${slug}/${topic}`,
     },
     keywords: [
-      '紫微斗数', '倪海�?, star, data.palaceName, data.topicLabel,
-      `${star}${data.palaceName}`, `${star}�?{data.palaceName}`,
-      `紫微斗数 ${star}`, '倪海厦紫微斗�?, '紫微斗数全集',
+      '绱井鏂楁暟', '鍊捣锟?, star, data.palaceName, data.topicLabel,
+      `${star}${data.palaceName}`, `${star}锟?{data.palaceName}`,
+      `绱井鏂楁暟 ${star}`, '鍊捣鍘︾传寰枟锟?, '绱井鏂楁暟鍏ㄩ泦',
     ],
   };
 }
@@ -66,64 +65,64 @@ export default async function KnowledgePage({ params }: { params: Promise<{ star
   const data = getKnowledge(star, topic as TopicKey);
   if (!data.exists) notFound();
 
-  // 同主星其�?topic
+  // 鍚屼富鏄熷叾锟?topic
   const otherTopicsForStar = ALL_TOPICS.filter(t => t !== topic && getKnowledge(star, t).exists);
-  // �?topic 其他主星
+  // 锟?topic 鍏朵粬涓绘槦
   const otherStarsForTopic = ALL_STARS.filter(s => s !== star && getKnowledge(s, topic as TopicKey).exists);
 
   // JSON-LD
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: `${star}�?{data.palaceName}�?· ${data.topicLabel}`,
+    headline: `${star}锟?{data.palaceName}锟?路 ${data.topicLabel}`,
     description: data.parsed.dingdiao,
-    author: { '@type': 'Organization', name: '紫微研究 · 倪海夏正�? },
+    author: { '@type': 'Organization', name: '绱井鐮旂┒ 路 鍊捣澶忔锟? },
     publisher: {
       '@type': 'Organization',
-      name: '紫微研究',
+      name: '绱井鐮旂┒',
       url: 'https://xiaoyuanzhanbu.top',
     },
     datePublished: '2026-04-28',
     dateModified: '2026-04-28',
     mainEntityOfPage: `https://xiaoyuanzhanbu.top/knowledge/${slug}/${topic}`,
-    articleSection: '紫微斗数 · 倪海夏体�?,
-    keywords: [`紫微斗数`, star, data.palaceName, data.topicLabel].join(', '),
+    articleSection: '绱井鏂楁暟 路 鍊捣澶忎綋锟?,
+    keywords: [`绱井鏂楁暟`, star, data.palaceName, data.topicLabel].join(', '),
   };
 
   return (
     <div style={{ background: 'var(--bg-page)', minHeight: '100vh' }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      {/* 顶栏 */}
+      {/* 椤舵爮 */}
       <div className="px-6 py-4 flex items-center justify-between"
         style={{ borderBottom: '1px solid rgba(184,146,42,0.15)', background: 'var(--bg-page)' }}>
         <Link href="/" style={{ fontSize: '12px', color: 'var(--ac)', letterSpacing: '0.3em', textDecoration: 'none' }}>
-          �?首页
+          锟?棣栭〉
         </Link>
         <div style={{ fontSize: '12px', color: 'var(--tx-3)', letterSpacing: '0.2em' }}>
-          倪师方法�?· 知识�?        </div>
+          鍊笀鏂规硶锟?路 鐭ヨ瘑锟?        </div>
         <Link href="/chart" style={{ fontSize: '12px', color: 'var(--ac)', letterSpacing: '0.2em', textDecoration: 'none' }}>
-          起盘 �?        </Link>
+          璧风洏 锟?        </Link>
       </div>
 
       <article className="max-w-3xl mx-auto px-6 py-12">
-        {/* 面包�?*/}
+        {/* 闈㈠寘锟?*/}
         <nav style={{ fontSize: '11px', color: 'var(--tx-3)', letterSpacing: '0.1em', marginBottom: '16px' }}>
-          <Link href="/" style={{ color: 'var(--tx-3)', textDecoration: 'none' }}>首页</Link>
+          <Link href="/" style={{ color: 'var(--tx-3)', textDecoration: 'none' }}>棣栭〉</Link>
           <span style={{ margin: '0 8px' }}>/</span>
-          <Link href="/knowledge" style={{ color: 'var(--tx-3)', textDecoration: 'none' }}>知识�?/Link>
+          <Link href="/knowledge" style={{ color: 'var(--tx-3)', textDecoration: 'none' }}>鐭ヨ瘑锟?/Link>
           <span style={{ margin: '0 8px' }}>/</span>
           <span>{star}</span>
-          <span style={{ margin: '0 8px' }}>·</span>
-          <span style={{ color: 'var(--ac)' }}>{data.palaceName}�?/span>
+          <span style={{ margin: '0 8px' }}>路</span>
+          <span style={{ color: 'var(--ac)' }}>{data.palaceName}锟?/span>
         </nav>
 
-        {/* 标题�?*/}
+        {/* 鏍囬锟?*/}
         <header style={{ marginBottom: '36px' }}>
           <div style={{ fontSize: '11px', color: 'var(--tx-3)', letterSpacing: '0.25em', marginBottom: '8px' }}>
-            {data.topicLabel} · 倪海夏体系详�?          </div>
+            {data.topicLabel} 路 鍊捣澶忎綋绯昏锟?          </div>
           <h1 style={{ fontSize: 'clamp(28px, 5vw, 44px)', fontWeight: 700, color: 'var(--tx-0)', letterSpacing: '0.1em', lineHeight: 1.2 }}>
-            {star}入{data.palaceName}�?          </h1>
+            {star}鍏data.palaceName}锟?          </h1>
           {STAR_BRIEF_SEO[star] && (
             <p style={{ fontSize: '13px', color: 'var(--tx-2)', marginTop: '14px', lineHeight: 1.8 }}>
               {STAR_BRIEF_SEO[star]}
@@ -131,9 +130,9 @@ export default async function KnowledgePage({ params }: { params: Promise<{ star
           )}
         </header>
 
-        {/* 内容 4 �?*/}
+        {/* 鍐呭 4 锟?*/}
         {data.parsed.dingdiao && (
-          <Section title="一句话定调" gradient>
+          <Section title="涓€鍙ヨ瘽瀹氳皟" gradient>
             <p style={{ fontSize: '17px', color: 'var(--tx-0)', lineHeight: 1.9, fontWeight: 500, letterSpacing: '0.04em' }}>
               {data.parsed.dingdiao}
             </p>
@@ -141,7 +140,7 @@ export default async function KnowledgePage({ params }: { params: Promise<{ star
         )}
 
         {data.parsed.lundian && (
-          <Section title="核心论断">
+          <Section title="鏍稿績璁烘柇">
             <div style={{ fontSize: '15px', color: 'var(--tx-0)', lineHeight: 2, letterSpacing: '0.02em', whiteSpace: 'pre-wrap' }}>
               {data.parsed.lundian}
             </div>
@@ -149,7 +148,7 @@ export default async function KnowledgePage({ params }: { params: Promise<{ star
         )}
 
         {data.parsed.yiju && (
-          <Section title="命盘依据">
+          <Section title="鍛界洏渚濇嵁">
             <div style={{ fontSize: '14px', color: 'var(--tx-0)', lineHeight: 2, letterSpacing: '0.02em', whiteSpace: 'pre-wrap' }}>
               {data.parsed.yiju}
             </div>
@@ -157,7 +156,7 @@ export default async function KnowledgePage({ params }: { params: Promise<{ star
         )}
 
         {data.parsed.chuchu && (
-          <Section title="经典出处" minimal>
+          <Section title="缁忓吀鍑哄" minimal>
             <div style={{ fontSize: '13px', color: 'var(--tx-2)', lineHeight: 2, letterSpacing: '0.02em', whiteSpace: 'pre-wrap' }}>
               {data.parsed.chuchu}
             </div>
@@ -174,9 +173,9 @@ export default async function KnowledgePage({ params }: { params: Promise<{ star
           textAlign: 'center',
         }}>
           <div style={{ fontSize: '14px', color: 'var(--tx-0)', fontWeight: 600, letterSpacing: '0.1em', marginBottom: '6px' }}>
-            想看你自己命盘的{data.topicLabel}�?          </div>
+            鎯崇湅浣犺嚜宸卞懡鐩樼殑{data.topicLabel}锟?          </div>
           <div style={{ fontSize: '12px', color: 'var(--tx-2)', marginBottom: '16px' }}>
-            输入生辰起盘 · 倪师正宗解读 · AI 答疑伴学
+            杈撳叆鐢熻景璧风洏 路 鍊笀姝ｅ畻瑙ｈ 路 AI 绛旂枒浼村
           </div>
           <Link href="/chart" style={{
             display: 'inline-block',
@@ -190,11 +189,11 @@ export default async function KnowledgePage({ params }: { params: Promise<{ star
             textDecoration: 'none',
             boxShadow: '0 4px 12px rgba(184,146,42,0.3)',
           }}>
-            立即起盘 �?          </Link>
+            绔嬪嵆璧风洏 锟?          </Link>
         </div>
 
-        {/* 内链：同主星其他 topic */}
-        <Section title={`${star}星的其他宫位解读`} minimal>
+        {/* 鍐呴摼锛氬悓涓绘槦鍏朵粬 topic */}
+        <Section title={`${star}鏄熺殑鍏朵粬瀹綅瑙ｈ`} minimal>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
             {otherTopicsForStar.map(t => {
               const d = getKnowledge(star, t);
@@ -212,15 +211,15 @@ export default async function KnowledgePage({ params }: { params: Promise<{ star
                     textDecoration: 'none',
                   }}
                 >
-                  {star}入{d.palaceName}
+                  {star}鍏d.palaceName}
                 </Link>
               );
             })}
           </div>
         </Section>
 
-        {/* 内链：同 topic 其他主星 */}
-        <Section title={`其他主星�?{data.palaceName}宫的解读`} minimal>
+        {/* 鍐呴摼锛氬悓 topic 鍏朵粬涓绘槦 */}
+        <Section title={`鍏朵粬涓绘槦锟?{data.palaceName}瀹殑瑙ｈ`} minimal>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
             {otherStarsForTopic.slice(0, 13).map(s => (
               <Link
@@ -236,13 +235,13 @@ export default async function KnowledgePage({ params }: { params: Promise<{ star
                   textDecoration: 'none',
                 }}
               >
-                {s}入{data.palaceName}
+                {s}鍏data.palaceName}
               </Link>
             ))}
           </div>
         </Section>
 
-        {/* 古籍库链�?*/}
+        {/* 鍙ょ睄搴撻摼锟?*/}
         <div style={{
           marginTop: '40px',
           padding: '16px 20px',
@@ -252,16 +251,16 @@ export default async function KnowledgePage({ params }: { params: Promise<{ star
           textAlign: 'center',
         }}>
           <div style={{ fontSize: '11px', color: 'var(--ac-dim)', letterSpacing: '0.15em', marginBottom: '6px' }}>
-            想读原典�?          </div>
+            鎯宠鍘熷吀锟?          </div>
           <Link href="/library" style={{ fontSize: '13px', color: 'var(--ac)', fontWeight: 500, letterSpacing: '0.1em', textDecoration: 'none' }}>
-            📜 查阅古籍原典�?�?紫微斗数全集 / 全书 / 骨髓�?�?          </Link>
+            馃摐 鏌ラ槄鍙ょ睄鍘熷吀锟?锟?绱井鏂楁暟鍏ㄩ泦 / 鍏ㄤ功 / 楠ㄩ珦锟?锟?          </Link>
         </div>
       </article>
 
-      {/* 页脚 */}
+      {/* 椤佃剼 */}
       <footer style={{ borderTop: '1px solid rgba(184,146,42,0.15)', padding: '20px 24px', textAlign: 'center', fontSize: '11px', color: 'var(--tx-3)', letterSpacing: '0.1em' }}>
-        <div style={{ marginBottom: '6px' }}>紫微研究 · 基于倪海夏正宗体�?· 仅供学习参�?/div>
-        <div style={{ opacity: 0.85 }}>本平台不构成任何医疗、投资、法律或重大决策建议</div>
+        <div style={{ marginBottom: '6px' }}>绱井鐮旂┒ 路 鍩轰簬鍊捣澶忔瀹椾綋锟?路 浠呬緵瀛︿範鍙傦拷?/div>
+        <div style={{ opacity: 0.85 }}>鏈钩鍙颁笉鏋勬垚浠讳綍鍖荤枟銆佹姇璧勩€佹硶寰嬫垨閲嶅ぇ鍐崇瓥寤鸿</div>
       </footer>
     </div>
   );

@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "build:cf": "npx @cloudflare/next-on-pages",
+    "build:cf": "next build",
     "preview:cf": "npx wrangler pages dev",
     "prepare": "husky"
   },
