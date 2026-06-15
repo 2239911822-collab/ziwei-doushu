@@ -1,21 +1,35 @@
 'use client';
 
 /**
- * 命盘分享�?�?真正�?12 宫命盘缩略图
+ * 命盘分享卡 — 真正的 12 宫命盘缩略图
  *
- * 设计：左�?12 宫缩略命�?+ 右侧关键信息
- * 浏览器原生中文字体，不依�?SSR
+ * 设计：左侧 12 宫缩略命盘 + 右侧关键信息
+ * 浏览器原生中文字体，不依赖 SSR
  */
 
 import type { ZiweiChart } from '@/lib/ziwei/types';
 
-const BRANCH_NAMES = ['�?, '�?, '�?, '�?, '�?, '�?, '�?, '�?, '�?, '�?, '�?, '�?];
+const BRANCH_NAMES = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
 
-// 紫微斗数 12 宫地支布局（按"地支�?标准排列，固定）
-// 寅卯辰巳 �?上行
-// �?   �?// �?   �?// 亥戌酉申 �?下行
+// 紫微斗数 12 宫地支布局（按"地支盘"标准排列，固定）
+// 寅卯辰巳 → 上行
+// 丑    午
+// 子    未
+// 亥戌酉申 → 下行
 const ZHIWEI_LAYOUT: Array<{ branch: number; row: number; col: number }> = [
-  { branch: 2,  row: 0, col: 0 }, // �?  { branch: 3,  row: 0, col: 1 }, // �?  { branch: 4,  row: 0, col: 2 }, // �?  { branch: 5,  row: 0, col: 3 }, // �?  { branch: 1,  row: 1, col: 0 }, // �?  { branch: 6,  row: 1, col: 3 }, // �?  { branch: 0,  row: 2, col: 0 }, // �?  { branch: 7,  row: 2, col: 3 }, // �?  { branch: 11, row: 3, col: 0 }, // �?  { branch: 10, row: 3, col: 1 }, // �?  { branch: 9,  row: 3, col: 2 }, // �?  { branch: 8,  row: 3, col: 3 }, // �?];
+  { branch: 2,  row: 0, col: 0 }, // 寅
+  { branch: 3,  row: 0, col: 1 }, // 卯
+  { branch: 4,  row: 0, col: 2 }, // 辰
+  { branch: 5,  row: 0, col: 3 }, // 巳
+  { branch: 1,  row: 1, col: 0 }, // 丑
+  { branch: 6,  row: 1, col: 3 }, // 午
+  { branch: 0,  row: 2, col: 0 }, // 子
+  { branch: 7,  row: 2, col: 3 }, // 未
+  { branch: 11, row: 3, col: 0 }, // 亥
+  { branch: 10, row: 3, col: 1 }, // 戌
+  { branch: 9,  row: 3, col: 2 }, // 酉
+  { branch: 8,  row: 3, col: 3 }, // 申
+];
 
 interface ShareCardProps {
   chart: ZiweiChart;
@@ -31,7 +45,8 @@ export default function ShareCardCanvas({ chart, birth, highlight }: ShareCardPr
   const shenBranchName = BRANCH_NAMES[chart.shenGongBranch] || '';
   const dx = chart.daXians?.[chart.currentDaXianIndex];
 
-  // 把每个宫位组织成 12 个格子，按布局�?  const cells = ZHIWEI_LAYOUT.map(slot => {
+  // 把每个宫位组织成 12 个格子，按布局画
+  const cells = ZHIWEI_LAYOUT.map(slot => {
     const palace = chart.palaces.find(p => p.branch === slot.branch);
     const majors = palace?.stars.filter(s => s.type === 'major') ?? [];
     const isMing = palace?.branch === chart.mingGongBranch;
@@ -39,7 +54,7 @@ export default function ShareCardCanvas({ chart, birth, highlight }: ShareCardPr
     return { ...slot, palace, majors, isMing, isShen };
   });
 
-  // 卡片尺寸�?80x420（适合微信缩略 + 朋友圈）
+  // 卡片尺寸：680x420（适合微信缩略 + 朋友圈）
   return (
     <div id="share-card" style={{
       width: '680px',
@@ -74,28 +89,28 @@ export default function ShareCardCanvas({ chart, birth, highlight }: ShareCardPr
             background: 'linear-gradient(135deg, #d4a948 0%, #b8922a 100%)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             color: 'white', fontSize: '15px', fontWeight: 700,
-          }}>�?/div>
+          }}>紫</div>
           <div>
             <div style={{ fontSize: '15px', color: '#3d2f10', fontWeight: 600, letterSpacing: '0.12em', lineHeight: 1.2 }}>紫气东源</div>
-            <div style={{ fontSize: '9px', color: '#a89b7c', letterSpacing: '0.18em', marginTop: '2px' }}>倪海夏正�?· ZI WEI</div>
+            <div style={{ fontSize: '9px', color: '#a89b7c', letterSpacing: '0.18em', marginTop: '2px' }}>倪海夏正宗 · ZI WEI</div>
           </div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
           <div style={{ fontSize: '10px', color: '#6b5d3f', letterSpacing: '0.05em' }}>
-            {birth.year}年{birth.month}月{birth.day}�?· {birth.hour.padStart(2,'0')}:{birth.minute.padStart(2,'0')}
+            {birth.year}年{birth.month}月{birth.day}日 · {birth.hour.padStart(2,'0')}:{birth.minute.padStart(2,'0')}
             <span style={{ margin: '0 4px', color: '#b8922a' }}>·</span>
             {birth.gender === 'male' ? '男命' : '女命'}
             {birth.city && <><span style={{ margin: '0 4px', color: '#b8922a' }}>·</span>{birth.city}</>}
           </div>
           <div style={{ fontSize: '8px', color: '#b8922a', letterSpacing: '0.08em', marginTop: '2px' }}>
-            xiaoyuanzhanbu.top
+            wdyziweidoushu666.com
           </div>
         </div>
       </div>
 
-      {/* 主体：左 12 宫格�?+ 右关键信�?*/}
+      {/* 主体：左 12 宫格子 + 右关键信息 */}
       <div style={{ display: 'flex', gap: '16px', flex: 1, position: 'relative', zIndex: 1, minHeight: 0 }}>
-        {/* 左：12 宫缩略命�?*/}
+        {/* 左：12 宫缩略命盘 */}
         <div style={{
           width: '300px',
           height: '288px',
@@ -110,7 +125,8 @@ export default function ShareCardCanvas({ chart, birth, highlight }: ShareCardPr
           position: 'relative',
         }}>
           {cells.map((cell, i) => {
-            // 中央 4 个格子（row 1-2, col 1-2）合并为中心说明�?            if ((cell.row === 1 || cell.row === 2) && (cell.col === 1 || cell.col === 2)) return null;
+            // 中央 4 个格子（row 1-2, col 1-2）合并为中心说明区
+            if ((cell.row === 1 || cell.row === 2) && (cell.col === 1 || cell.col === 2)) return null;
             return (
               <div key={i} style={{
                 gridRow: cell.row + 1,
@@ -137,7 +153,7 @@ export default function ShareCardCanvas({ chart, birth, highlight }: ShareCardPr
                 }}>
                   <span style={{ fontWeight: cell.isMing ? 700 : 400 }}>
                     {cell.palace?.name || ''}
-                    {cell.isShen ? '·�? : ''}
+                    {cell.isShen ? '·身' : ''}
                   </span>
                   <span style={{ fontSize: '7px', opacity: 0.7 }}>{BRANCH_NAMES[cell.branch]}</span>
                 </div>
@@ -192,7 +208,7 @@ export default function ShareCardCanvas({ chart, birth, highlight }: ShareCardPr
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           {/* 命宫主星 */}
           <div>
-            <div style={{ fontSize: '10px', color: '#a89b7c', letterSpacing: '0.25em', marginBottom: '2px' }}>�?�?· {mingBranchName}</div>
+            <div style={{ fontSize: '10px', color: '#a89b7c', letterSpacing: '0.25em', marginBottom: '2px' }}>命 宫 · {mingBranchName}</div>
             <div style={{
               fontSize: '52px',
               fontWeight: 800,
@@ -228,7 +244,7 @@ export default function ShareCardCanvas({ chart, birth, highlight }: ShareCardPr
                 letterSpacing: '0.05em',
               }}>
                 <span style={{ color: '#a89b7c' }}>当前大限 </span>
-                <span style={{ fontWeight: 600 }}>{dx.startAge}–{dx.endAge} �?· {dx.palaceName}</span>
+                <span style={{ fontWeight: 600 }}>{dx.startAge}–{dx.endAge} 岁 · {dx.palaceName}</span>
               </div>
             )}
             <div style={{
@@ -238,12 +254,14 @@ export default function ShareCardCanvas({ chart, birth, highlight }: ShareCardPr
               borderRadius: '6px',
             }}>
               <div style={{ fontSize: '11px', color: '#3d2f10', fontWeight: 600, letterSpacing: '0.08em', lineHeight: 1.4 }}>
-                紫微为门 · 天地人为�?              </div>
+                紫微为门 · 天地人为路
+              </div>
               <div style={{ fontSize: '10px', color: '#8b6a14', fontWeight: 600, letterSpacing: '0.08em', lineHeight: 1.4, marginTop: '2px' }}>
-                倪海夏为�?· AI 答疑伴学
+                倪海夏为师 · AI 答疑伴学
               </div>
               <div style={{ fontSize: '8px', color: '#a89b7c', letterSpacing: '0.15em', marginTop: '4px' }}>
-                扫码起你的命�?�?              </div>
+                扫码起你的命盘 →
+              </div>
             </div>
           </div>
         </div>
@@ -252,7 +270,7 @@ export default function ShareCardCanvas({ chart, birth, highlight }: ShareCardPr
   );
 }
 
-/** 截图工具：把上面�?div 转成 PNG dataURL */
+/** 截图工具：把上面的 div 转成 PNG dataURL */
 export async function captureShareCard(): Promise<string | null> {
   try {
     const html2canvas = (await import('html2canvas')).default;

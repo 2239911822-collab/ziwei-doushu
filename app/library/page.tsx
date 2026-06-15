@@ -1,7 +1,7 @@
 /**
- * 古籍原典查询�?· 主页
+ * 古籍原典查询库 · 主页
  *
- * 列出所有收录古�?+ 全局搜索入口
+ * 列出所有收录古籍 + 全局搜索入口
  */
 
 import Link from 'next/link';
@@ -9,8 +9,8 @@ import { ALL_BOOKS, TOTAL_PARAGRAPHS } from '@/lib/classics';
 import LibrarySearch from './LibrarySearch';
 
 export const metadata = {
-  title: '倪师方法�?· 古籍原典�?· 紫微斗数全集 / 全书 / 骨髓�?,
-  description: '紫微斗数权威古籍全文检索：《紫微斗数全集》《紫微斗数全书》《骨髓赋》倪海夏《天纪》引证来�?,
+  title: '倪师方法论 · 古籍原典库 · 紫微斗数全集 / 全书 / 骨髓赋',
+  description: '紫微斗数权威古籍全文检索：《紫微斗数全集》《紫微斗数全书》《骨髓赋》倪海夏《天纪》引证来源',
 };
 
 export default function LibraryHomePage() {
@@ -20,13 +20,14 @@ export default function LibraryHomePage() {
       <div className="px-6 py-4 flex items-center justify-between"
         style={{ borderBottom: '1px solid rgba(184,146,42,0.15)', background: 'var(--bg-page)' }}>
         <Link href="/" style={{ fontSize: '12px', color: 'var(--ac)', letterSpacing: '0.3em', textDecoration: 'none' }}>
-          �?返回首页
+          ← 返回首页
         </Link>
         <div style={{ fontSize: '12px', color: 'var(--tx-3)', letterSpacing: '0.3em' }}>
-          古籍原典�?· CLASSICS
+          古籍原典库 · CLASSICS
         </div>
         <Link href="/chart" style={{ fontSize: '12px', color: 'var(--ac)', letterSpacing: '0.2em', textDecoration: 'none' }}>
-          起盘 �?        </Link>
+          起盘 →
+        </Link>
       </div>
 
       {/* Hero */}
@@ -37,10 +38,12 @@ export default function LibraryHomePage() {
           <div style={{ height: '1px', width: '48px', background: 'linear-gradient(to left, transparent, rgba(184,146,42,0.4))' }} />
         </div>
         <h1 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 700, color: 'var(--tx-0)', letterSpacing: '0.15em', marginBottom: '12px' }}>
-          倪师方法�?· 古籍原典�?        </h1>
+          倪师方法论 · 古籍原典库
+        </h1>
         <p style={{ fontSize: '14px', color: 'var(--tx-2)', letterSpacing: '0.1em', maxWidth: '600px', margin: '0 auto', lineHeight: 1.7 }}>
-          紫微斗数权威古籍全文检�?br />
-          收录 <strong style={{ color: 'var(--ac)' }}>{ALL_BOOKS.length}</strong> 部古�?· �?<strong style={{ color: 'var(--ac)' }}>{TOTAL_PARAGRAPHS}</strong> 段精�?        </p>
+          紫微斗数权威古籍全文检索<br />
+          收录 <strong style={{ color: 'var(--ac)' }}>{ALL_BOOKS.length}</strong> 部古籍 · 共 <strong style={{ color: 'var(--ac)' }}>{TOTAL_PARAGRAPHS}</strong> 段精华
+        </p>
       </div>
 
       {/* 搜索 */}
@@ -71,14 +74,15 @@ export default function LibraryHomePage() {
                 {book.dynasty} · {book.author.split(' ')[0]}
               </div>
               <div style={{ fontSize: '20px', fontWeight: 600, color: 'var(--tx-0)', marginBottom: '10px', letterSpacing: '0.1em' }}>
-                《{book.title}�?              </div>
+                《{book.title}》
+              </div>
               <div style={{ fontSize: '12px', color: 'var(--tx-2)', lineHeight: 1.7, marginBottom: '14px' }}>
                 {book.intro}
               </div>
               <div style={{ display: 'flex', gap: '12px', fontSize: '11px', color: 'var(--tx-3)' }}>
                 <span>{book.chapters.length} 章节</span>
                 <span style={{ color: 'rgba(184,146,42,0.4)' }}>·</span>
-                <span>{book.chapters.reduce((s, c) => s + c.paragraphs.length, 0)} 段精�?/span>
+                <span>{book.chapters.reduce((s, c) => s + c.paragraphs.length, 0)} 段精华</span>
               </div>
               <div style={{
                 display: 'inline-flex',
@@ -88,7 +92,8 @@ export default function LibraryHomePage() {
                 letterSpacing: '0.15em',
                 fontWeight: 500,
               }}>
-                进入查阅 �?              </div>
+                进入查阅 →
+              </div>
             </Link>
           ))}
         </div>
@@ -99,9 +104,10 @@ export default function LibraryHomePage() {
             关于本库
           </div>
           <div style={{ fontSize: '12px', color: 'var(--tx-2)', lineHeight: 1.8, maxWidth: '600px', margin: '0 auto' }}>
-            所收录古籍均为公版（明代刊本）�?br />
-            内容持续完善，未来将补全《紫微斗数全集》全本与倪海夏《天纪》引证目录�?br />
-            如发现任何错误请联系我们�?          </div>
+            所收录古籍均为公版（明代刊本）。<br />
+            内容持续完善，未来将补全《紫微斗数全集》全本与倪海夏《天纪》引证目录。<br />
+            如发现任何错误请联系我们。
+          </div>
         </div>
       </div>
     </div>

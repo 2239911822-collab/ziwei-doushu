@@ -1,14 +1,16 @@
 /**
- * /knowledge �?知识库主�? * 列出 14 主星，每星可看其�?13 宫位的解�? */
+ * /knowledge — 知识库主页
+ * 列出 14 主星，每星可看其在 13 宫位的解读
+ */
 
 import Link from 'next/link';
 import { ALL_STARS, ALL_TOPICS, getKnowledge, STAR_BRIEF_SEO, STAR_TO_SLUG } from '@/lib/seo/knowledge';
 import { TOPIC_LABEL } from '@/lib/ziwei/db-analysis';
 
 export const metadata = {
-  title: '紫微斗数知识�?· 14 主星 × 13 宫位 · 倪海夏正宗体�?,
-  description: '基于倪海夏《天纪》体系与古籍《紫微斗数全集》《骨髓赋》编纂的紫微斗数知识库。覆�?14 主星�?13 个宫位的完整论断，含一句话定调、核心论断、命盘依据、经典出处�?,
-  keywords: ['紫微斗数', '倪海�?, '倪海厦紫微斗�?, '紫微斗数全集', '紫微斗数全书', '14 主星', '12 宫位'],
+  title: '紫微斗数知识库 · 14 主星 × 13 宫位 · 倪海夏正宗体系',
+  description: '基于倪海夏《天纪》体系与古籍《紫微斗数全集》《骨髓赋》编纂的紫微斗数知识库。覆盖 14 主星在 13 个宫位的完整论断，含一句话定调、核心论断、命盘依据、经典出处。',
+  keywords: ['紫微斗数', '倪海夏', '倪海厦紫微斗数', '紫微斗数全集', '紫微斗数全书', '14 主星', '12 宫位'],
 };
 
 export default function KnowledgeHomePage() {
@@ -20,12 +22,14 @@ export default function KnowledgeHomePage() {
       <div className="px-6 py-4 flex items-center justify-between"
         style={{ borderBottom: '1px solid rgba(184,146,42,0.15)', background: 'var(--bg-page)' }}>
         <Link href="/" style={{ fontSize: '12px', color: 'var(--ac)', letterSpacing: '0.3em', textDecoration: 'none' }}>
-          �?首页
+          ← 首页
         </Link>
         <div style={{ fontSize: '12px', color: 'var(--tx-3)', letterSpacing: '0.2em' }}>
-          倪师方法�?· 知识�?        </div>
+          倪师方法论 · 知识库
+        </div>
         <Link href="/library" style={{ fontSize: '12px', color: 'var(--ac)', letterSpacing: '0.2em', textDecoration: 'none' }}>
-          古籍 �?        </Link>
+          古籍 →
+        </Link>
       </div>
 
       {/* Hero */}
@@ -36,10 +40,12 @@ export default function KnowledgeHomePage() {
           <div style={{ height: '1px', width: '48px', background: 'linear-gradient(to left, transparent, rgba(184,146,42,0.4))' }} />
         </div>
         <h1 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 700, color: 'var(--tx-0)', letterSpacing: '0.15em', marginBottom: '12px' }}>
-          紫微斗数知识�?        </h1>
+          紫微斗数知识库
+        </h1>
         <p style={{ fontSize: '14px', color: 'var(--tx-2)', letterSpacing: '0.08em', maxWidth: '600px', margin: '0 auto', lineHeight: 1.7 }}>
-          14 主星 × 13 宫位 = <strong style={{ color: 'var(--ac)' }}>{ALL_STARS.length * ALL_TOPICS.length}</strong> 项专�?br />
-          基于倪海夏《天纪》体系编�?· 含古籍引�?        </p>
+          14 主星 × 13 宫位 = <strong style={{ color: 'var(--ac)' }}>{ALL_STARS.length * ALL_TOPICS.length}</strong> 项专题<br />
+          基于倪海夏《天纪》体系编纂 · 含古籍引证
+        </p>
       </div>
 
       {/* 14 主星卡片 */}
@@ -71,7 +77,7 @@ export default function KnowledgeHomePage() {
           ))}
         </div>
 
-        {/* 详细列表（每个主�?+ 简�?+ 进入按钮�?*/}
+        {/* 详细列表（每个主星 + 简介 + 进入按钮） */}
         <div className="mt-14 space-y-4">
           {ALL_STARS.map(star => (
             <div key={star} style={{
@@ -82,7 +88,8 @@ export default function KnowledgeHomePage() {
             }}>
               <div className="flex items-baseline gap-3 mb-2">
                 <span style={{ fontSize: '20px', fontWeight: 700, color: 'var(--tx-0)', letterSpacing: '0.1em' }}>
-                  {star}�?                </span>
+                  {star}星
+                </span>
                 <span style={{ fontSize: '11px', color: 'var(--tx-3)', letterSpacing: '0.15em' }}>
                   ZI WEI · 14 STARS
                 </span>

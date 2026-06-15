@@ -1,4 +1,4 @@
-export const metadata = { title: '隐私政策 · 紫气东源', description: '紫气东源隐私政策' };
+export const metadata = { title: '隐私政策 · 紫微命盘', description: '紫气东源隐私政策' };
 
 export default function PrivacyPage() {
   return (

@@ -1,4 +1,4 @@
-export const metadata = { title: '服务条款 · 紫气东源', description: '紫气东源服务条款与用户协议' };
+export const metadata = { title: '服务条款 · 紫微命盘', description: '紫气东源服务条款与用户协议' };
 
 export default function TermsPage() {
   return (

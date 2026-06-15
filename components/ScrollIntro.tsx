@@ -8,15 +8,22 @@ interface ScrollIntroProps {
   skipLabel?: string;
 }
 
-const BEIDOU = ['天枢', '天璇', '天玑', '天权', '玉衡', '开�?, '摇光'];
+const BEIDOU = ['天枢', '天璇', '天玑', '天权', '玉衡', '开阳', '摇光'];
 
-export default function ScrollIntro({ onComplete, skipLabel = '�?�? }: ScrollIntroProps) {
-  // visible：整�?intro 是否在显�?  // unrolled：卷轴是否已展开（控制内容浮现）
+export default function ScrollIntro({ onComplete, skipLabel = '跳 过' }: ScrollIntroProps) {
+  // visible：整个 intro 是否在显示
+  // unrolled：卷轴是否已展开（控制内容浮现）
   const [visible, setVisible] = useState(true);
   const [unrolled, setUnrolled] = useState(false);
 
   useEffect(() => {
-    // 时间序列�?    // 0.0s        : 卷轴杆在中央，纸卷起来（width: 0�?    // 0.3-2.0s   : 卷轴往两侧展开�?.7s�?    // 2.0s        : unrolled = true，内容浮�?    // 2.0-3.5s   : 内容停留 1.5s 给用户欣�?    // 3.5s        : 整体开始淡�?    // 4.2s        : visible = false，触�?onComplete
+    // 时间序列：
+    // 0.0s        : 卷轴杆在中央，纸卷起来（width: 0）
+    // 0.3-2.0s   : 卷轴往两侧展开（1.7s）
+    // 2.0s        : unrolled = true，内容浮现
+    // 2.0-3.5s   : 内容停留 1.5s 给用户欣赏
+    // 3.5s        : 整体开始淡出
+    // 4.2s        : visible = false，触发 onComplete
     const t1 = setTimeout(() => setUnrolled(true), 1900);
     const t2 = setTimeout(() => setVisible(false), 3500);
     const t3 = setTimeout(onComplete, 4200);
@@ -28,7 +35,8 @@ export default function ScrollIntro({ onComplete, skipLabel = '�?�? }: Scrol
     setTimeout(onComplete, 700);
   };
 
-  // 卷轴展开缓动：先快后慢（卷轴拉开的物理感�?  const easeUnroll = [0.32, 0.72, 0.36, 1.0] as const;
+  // 卷轴展开缓动：先快后慢（卷轴拉开的物理感）
+  const easeUnroll = [0.32, 0.72, 0.36, 1.0] as const;
 
   return (
     <AnimatePresence>
@@ -57,13 +65,13 @@ export default function ScrollIntro({ onComplete, skipLabel = '�?�? }: Scrol
             `,
           }} />
 
-          {/* 卷轴主体（从右往左展开 �?右轴固定、纸向左铺、左轴向左移�?*/}
+          {/* 卷轴主体（从右往左展开 — 右轴固定、纸向左铺、左轴向左移） */}
           <div style={{
             position: 'relative',
             width: 'min(90vw, 1080px)',
             height: 'min(60vh, 480px)',
           }}>
-            {/* 宣纸（right 锚定在右轴内侧，width �?0 �?100% - 左右两轴宽度�?*/}
+            {/* 宣纸（right 锚定在右轴内侧，width 从 0 → 100% - 左右两轴宽度） */}
             <motion.div
               initial={{ width: 0, opacity: 0.92 }}
               animate={{ width: 'calc(100% - 32px)', opacity: 1 }}
@@ -85,7 +93,7 @@ export default function ScrollIntro({ onComplete, skipLabel = '�?�? }: Scrol
                 overflow: 'hidden',
               }}
             >
-              {/* 上下卷边阴影（仿古卷轴的折痕�?*/}
+              {/* 上下卷边阴影（仿古卷轴的折痕） */}
               <div style={{
                 position: 'absolute', top: 0, left: 0, right: 0, height: '8px',
                 background: 'linear-gradient(180deg, rgba(80,50,20,0.35), transparent)',
@@ -140,7 +148,7 @@ export default function ScrollIntro({ onComplete, skipLabel = '�?�? }: Scrol
                   marginBottom: 'clamp(16px, 2.5vh, 28px)',
                 }} />
 
-                {/* 大字「紫气东源�?*/}
+                {/* 大字「紫气东源」 */}
                 <h1 style={{
                   fontSize: 'clamp(48px, 8vw, 110px)',
                   fontWeight: 700,
@@ -164,7 +172,8 @@ export default function ScrollIntro({ onComplete, skipLabel = '�?�? }: Scrol
                   marginBottom: '6px',
                   whiteSpace: 'nowrap',
                 }}>
-                  �?�?�?�?· �?�?�?�?                </div>
+                  观 天 之 象 · 察 人 之 命
+                </div>
                 <div style={{
                   fontSize: 'clamp(11px, 1.2vw, 14px)',
                   color: '#8b6410',
@@ -173,7 +182,8 @@ export default function ScrollIntro({ onComplete, skipLabel = '�?�? }: Scrol
                   whiteSpace: 'nowrap',
                   opacity: 0.85,
                 }}>
-                  倪海夏《天纪》正宗体�?                </div>
+                  倪海夏《天纪》正宗体系
+                </div>
 
                 {/* 朱砂方印 */}
                 <motion.div
@@ -198,11 +208,11 @@ export default function ScrollIntro({ onComplete, skipLabel = '�?�? }: Scrol
                     fontSize: 'clamp(11px, 1.2vw, 13px)',
                   }}
                 >
-                  <div style={{ display: 'flex', gap: '0' }}><span>�?/span><span>�?/span></div>
-                  <div style={{ display: 'flex', gap: '0' }}><span>�?/span><span>�?/span></div>
+                  <div style={{ display: 'flex', gap: '0' }}><span>王</span><span>多</span></div>
+                  <div style={{ display: 'flex', gap: '0' }}><span>鱼</span><span>印</span></div>
                 </motion.div>
 
-                {/* 底部装饰：八�?*/}
+                {/* 底部装饰：八卦 */}
                 <div style={{
                   marginTop: 'clamp(20px, 3vh, 32px)',
                   fontSize: 'clamp(13px, 1.4vw, 16px)',
@@ -211,11 +221,12 @@ export default function ScrollIntro({ onComplete, skipLabel = '�?�? }: Scrol
                   opacity: 0.7,
                   whiteSpace: 'nowrap',
                 }}>
-                  �?�?�?�?�?�?�?�?                </div>
+                  ☰ ☱ ☲ ☳ ☴ ☵ ☶ ☷
+                </div>
               </motion.div>
             </motion.div>
 
-            {/* 右卷轴杆（固定不动，是收纳卷轴的母轴�?*/}
+            {/* 右卷轴杆（固定不动，是收纳卷轴的母轴） */}
             <div
               style={{
                 position: 'absolute', top: 0, bottom: 0, right: 0,
@@ -226,7 +237,7 @@ export default function ScrollIntro({ onComplete, skipLabel = '�?�? }: Scrol
                 zIndex: 2,
               }}
             >
-              {/* 上端铜玉�?*/}
+              {/* 上端铜玉帽 */}
               <div style={{
                 position: 'absolute', top: '-14px', left: '-6px', right: '-6px',
                 height: '20px',
@@ -243,7 +254,7 @@ export default function ScrollIntro({ onComplete, skipLabel = '�?�? }: Scrol
               }} />
             </div>
 
-            {/* 左卷轴杆（从右轴位置出发，向左拉开 �?这是被「拉」的那根�?*/}
+            {/* 左卷轴杆（从右轴位置出发，向左拉开 — 这是被「拉」的那根） */}
             <motion.div
               initial={{ right: '0px' }}
               animate={{ right: 'calc(100% - 32px)' }}
@@ -299,7 +310,8 @@ export default function ScrollIntro({ onComplete, skipLabel = '�?�? }: Scrol
               e.currentTarget.style.color = 'rgba(232,220,196,0.55)';
             }}
           >
-            {skipLabel} �?          </button>
+            {skipLabel} →
+          </button>
         </motion.div>
       )}
     </AnimatePresence>
